@@ -1,3 +1,4 @@
+import os.path
 from datetime import date
 
 from ariadne import convert_kwargs_to_snake_case
@@ -124,3 +125,28 @@ def update_post_resolver_person(obj, info, id_person, city):
         }
 
     return payload
+
+@convert_kwargs_to_snake_case
+def ocr_converter_resolver(obj, info, file: any, language: str, format: str, converter : str):
+    path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
+    file.save(path)
+    url = "http://127.0.0.1:5003/convert"
+
+    payload = {'language': 'eng',
+               'format': 'docx',
+               'convert': 'OCR'}
+    files = [
+        ('file', (file.filename, open(path, 'rb'),
+                  'application/octet-stream'))
+    ]
+    headers = {}
+
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+    print(response.text)
+
+    payloads = {
+        "success": True,
+        "post": response.json()
+    }
+    return payloads
