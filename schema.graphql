@@ -3,6 +3,8 @@ schema {
     mutation: Mutation
 }
 
+scalar Upload
+
 type Resource {
     _id: ID!
     resource_model: String!
@@ -50,10 +52,22 @@ type Query {
     getPostPerson(id: ID!): PostPerson!
 }
 
+type result_convert_ocr{
+    status: Int!
+    message: String!
+}
+
+type ocr_converter{
+    success: Boolean!
+    errors: [String]
+    post: result_convert_ocr
+}
+
 type Mutation {
     createPost(name: String!, type: String!, model: String!, state: String!): PostResult!
     updatePost(id_source: ID!, name: String!  ): PostResult!
     deletePost(id_source: ID): PostResult!
     createPerson(name: String!, age: String!, city:String!, country:String!, gender:String! ): PostPerson!
     updatePerson(id_person: ID!, city: String): PostPerson!
+    convert_ocr(file: Upload!, language: String!, format: String!, converter: String!): ocr_converter
 }
