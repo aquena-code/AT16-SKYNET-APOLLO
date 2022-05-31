@@ -1,3 +1,16 @@
+#
+# @app.py Copyright (c)
+# 2643 Av  Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+# 1376 Av General Inofuentes esquina calle 20, La Paz, Bolivia.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of
+# Jalasoft, ("Condidential Information"). You shall # not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with Jalasoft .
+#
+
 from api import app,db
 
 from ariadne import load_schema_from_path, make_executable_schema, \
@@ -6,7 +19,9 @@ from ariadne.constants import PLAYGROUND_HTML
 from flask import request, jsonify
 from api.queries import listPosts_resolver, getPost_resolver, listPosts_resolver_person, getPost_resolver_person
 from api.mutations import create_post_resolver, update_post_resolver, delete_post_resolver, \
-    create_post_resolver_person, update_post_resolver_person, ocr_converter_resolver
+    create_post_resolver_person, update_post_resolver_person, ocr_converter_resolver, image_converter_resolver, \
+    metadata_converter_resolver, translator_converter_resolver, waptxt_converter_resolver, video_converter_resolver, \
+    audio_converter_resolver
 import json
 from flask_cors import CORS
 
@@ -27,6 +42,12 @@ mutation.set_field("deletePost", delete_post_resolver)
 mutation.set_field("createPerson", create_post_resolver_person)
 mutation.set_field("updatePerson", update_post_resolver_person)
 mutation.set_field("convert_ocr", ocr_converter_resolver)
+mutation.set_field("convert_image", image_converter_resolver)
+mutation.set_field("convert_metadata", metadata_converter_resolver)
+mutation.set_field("convert_translator", translator_converter_resolver)
+mutation.set_field("convert_waptxt", waptxt_converter_resolver)
+mutation.set_field("convert_video", video_converter_resolver)
+mutation.set_field("convert_audio", audio_converter_resolver)
 
 type_defs = load_schema_from_path("schema.graphql")
 schema = make_executable_schema(
