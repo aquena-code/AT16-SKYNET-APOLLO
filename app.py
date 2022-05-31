@@ -1,12 +1,16 @@
-from api import app,db
+from api import app, db
 
 from ariadne import load_schema_from_path, make_executable_schema, \
     graphql_sync, snake_case_fallback_resolvers, ObjectType, combine_multipart_data, upload_scalar
 from ariadne.constants import PLAYGROUND_HTML
 from flask import request, jsonify
-from api.queries import listPosts_resolver, getPost_resolver, listPosts_resolver_person, getPost_resolver_person
+from api.queries import listPosts_resolver, getPost_resolver, listPosts_resolver_person, \
+    getPost_resolver_person, getPost_resolver_booking, listPosts_resolver_booking, \
+    getPost_resolver_name_person, getPost_resolver_name
 from api.mutations import create_post_resolver, update_post_resolver, delete_post_resolver, \
-    create_post_resolver_person, update_post_resolver_person, ocr_converter_resolver
+    create_post_resolver_person, update_post_resolver_person, ocr_converter_resolver, \
+    delete_post_resolver_booking, update_post_resolver_booking, create_post_resolver_booking, \
+    delete_post_resolver_person
 import json
 from flask_cors import CORS
 
@@ -16,9 +20,14 @@ mutation = ObjectType("Mutation")
 
 query.set_field("listPosts", listPosts_resolver)
 query.set_field("getPost", getPost_resolver)
+query.set_field("getPostName", getPost_resolver_name)
 
 query.set_field("listPostsPerson", listPosts_resolver_person)
 query.set_field("getPostPerson", getPost_resolver_person)
+query.set_field("getPostNamePerson", getPost_resolver_name_person)
+
+query.set_field("listPostsBooking", listPosts_resolver_booking)
+query.set_field("getPostBooking", getPost_resolver_booking)
 
 mutation.set_field("createPost", create_post_resolver)
 mutation.set_field("updatePost", update_post_resolver)
@@ -26,6 +35,12 @@ mutation.set_field("deletePost", delete_post_resolver)
 
 mutation.set_field("createPerson", create_post_resolver_person)
 mutation.set_field("updatePerson", update_post_resolver_person)
+mutation.set_field("deletePerson", delete_post_resolver_person)
+
+mutation.set_field("createBooking", create_post_resolver_booking)
+mutation.set_field("updateBooking", update_post_resolver_booking)
+mutation.set_field("deleteBooking", delete_post_resolver_booking)
+
 mutation.set_field("convert_ocr", ocr_converter_resolver)
 
 type_defs = load_schema_from_path("schema.graphql")

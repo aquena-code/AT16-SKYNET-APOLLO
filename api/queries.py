@@ -40,6 +40,26 @@ def getPost_resolver(obj, info, id):
 
     return payload
 
+
+@convert_kwargs_to_snake_case
+def getPost_resolver_name(obj, info, name):
+    try:
+        url = address + '/resource/name/' + name
+        response = requests.get(url)
+        payload = {
+            "success": True,
+            "post": response.json()
+        }
+
+    except AttributeError:  # todo not found
+        payload = {
+            "success": False,
+            "errors": [f"Todo item matching name {name} not found"]
+        }
+
+    return payload
+
+
 def listPosts_resolver_person(obj, info):
     try:
         url = address + '/person'
@@ -72,4 +92,57 @@ def getPost_resolver_person(obj, info, id):
             "errors": [f"Todo item matching id {id} not found"]
         }
 
+    return payload
+
+
+@convert_kwargs_to_snake_case
+def getPost_resolver_name_person(obj, info, name):
+    try:
+        url = address + '/person/name/' + name
+        response = requests.get(url)
+        payload = {
+            "success": True,
+            "post": response.json()
+        }
+
+    except AttributeError:  # todo not found
+        payload = {
+            "success": False,
+            "errors": [f"Todo item matching name {name} not found"]
+        }
+
+    return payload
+
+
+@convert_kwargs_to_snake_case
+def listPosts_resolver_booking(obj, info):
+    try:
+        url = address + '/booking'
+        response = requests.get(url)
+        payload = {
+            "success": True,
+            "posts": response.json()
+        }
+    except Exception as error:
+        payload = {
+            "success": False,
+            "errors": [str(error)]
+        }
+    return payload
+
+
+@convert_kwargs_to_snake_case
+def getPost_resolver_booking(obj, info, id):
+    try:
+        url = address + '/booking/id/' + id
+        response = requests.get(url)
+        payload = {
+            "success": True,
+            "post": response.json()
+        }
+    except AttributeError:  # todo not found
+        payload = {
+            "success": False,
+            "errors": [f"Todo item matching id {id} not found"]
+        }
     return payload
