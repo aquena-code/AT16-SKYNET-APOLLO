@@ -20,6 +20,8 @@ scalar Upload
 
 type Resource {
     _id: ID!
+    delete: Int!
+    name: String!
     resource_model: String!
     resource_name: String!
     resource_state: String!
@@ -34,7 +36,31 @@ type Person {
     person_full_name: String!
     person_gender: String!
 }
-
+type details{
+    description: String!
+    subject: String!
+}
+type schedule{
+    date: String!
+    start_time: String!
+    end_time: String!
+}
+type resource{
+    id: [String!]
+}
+type person{
+    id: String!
+}
+type Booking {
+    _id: ID!
+    delete: Int!
+    details: details!
+    schedule: schedule!
+    state: String!
+    type: String!
+    resource: resource!
+    person: person!
+}
 type PostResult {
     success: Boolean!
     errors: [String]
@@ -57,12 +83,28 @@ type PostsResultPerson {
     errors: [String]
     posts: [Person]
 }
+type PostBooking {
+    success: Boolean!
+    errors: [String]
+    post: Booking
+}
+
+type PostsResultBooking {
+    success: Boolean!
+    errors: [String]
+    posts: [Booking]
+}
 
 type Query {
     listPosts: PostsResult!
     listPostsPerson: PostsResultPerson!
+    listPostsBooking: PostsResultBooking!
     getPost(id: ID!): PostResult!
     getPostPerson(id: ID!): PostPerson!
+    getPostBooking(id: ID!): PostBooking!
+    getPostName(name: String!): PostResult!
+    getPostNamePerson(name: String!): PostPerson!
+
 }
 
 type result_convert_ocr{
@@ -150,6 +192,10 @@ type Mutation {
     createPerson(name: String!, age: String!, city:String!, country:String!, gender:String! ): PostPerson!
     updatePerson(id_person: ID!, city: String): PostPerson!
     convert_ocr(file: Upload!, language: String!, format: String!, converter: String!): ocr_converter
+    deletePerson(id_person: ID): PostPerson!
+    createBooking(description: String!, subject:String!, person_id:String!, resource_id:String!, date:String!, end_time:String!, start_time:String!, state:String!, type:String!): PostBooking!
+    updateBooking(id_booking: ID!, description: String, subject:String, person_id:String, resource_id:String, date:String, end_time:String, start_time:String, state:String, type:String): PostBooking!
+    deleteBooking(id_booking: ID): PostBooking!
     convert_image(file: Upload!, color: String!, rotate: String!, vertical_flip: String!, horizontal_flip: String!, height: String!,
     width: String!, format: String!, convert: String!): image_converter
     convert_metadata(file: Upload!, format: String!, convert: String!): metadata_converter
