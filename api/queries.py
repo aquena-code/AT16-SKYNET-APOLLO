@@ -1,11 +1,24 @@
+#
+# @queries.py Copyright (c)
+# 2643 Av  Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+# 1376 Av General Inofuentes esquina calle 20, La Paz, Bolivia.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of
+# Jalasoft, ("Condidential Information"). You shall # not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with Jalasoft .
+#
+
 import requests
 from decouple import config
-
-address = config('address')
-from .models import Post
 from ariadne import convert_kwargs_to_snake_case
 
+address = config('address')
 
+
+@convert_kwargs_to_snake_case
 def listPosts_resolver(obj, info):
     try:
         url = address + '/resource'

@@ -10,8 +10,8 @@
 # accordance with the terms of the license agreement you entered into
 # with Jalasoft .
 #
-import json
 
+import json
 from api import app,db
 from ariadne import load_schema_from_path, make_executable_schema, \
     graphql_sync, snake_case_fallback_resolvers, ObjectType, combine_multipart_data, upload_scalar
@@ -21,7 +21,6 @@ from api.queries import listPosts_resolver, getPost_resolver, listPosts_resolver
     getPost_resolver_person, getPost_resolver_booking, listPosts_resolver_booking, \
     getPost_resolver_name_person, getPost_resolver_name
 from api.mutations import create_post_resolver, update_post_resolver, delete_post_resolver, \
-    create_post_resolver_person, update_post_resolver_person, ocr_converter_resolver, \
     delete_post_resolver_booking, update_post_resolver_booking, create_post_resolver_booking, \
     delete_post_resolver_person, create_post_resolver_person, update_post_resolver_person, \
     ocr_converter_resolver, image_converter_resolver, metadata_converter_resolver, \
@@ -69,12 +68,13 @@ schema = make_executable_schema(
     type_defs, query, mutation, snake_case_fallback_resolvers, upload_scalar
 )
 
-@app.route("/graphql2", methods=["GET"])
+
+@app.route("/graphql", methods=["GET"])
 def graphql_playground():
     return PLAYGROUND_HTML, 200
 
 
-@app.route("/graphql2", methods=["POST"])
+@app.route("/graphql", methods=["POST"])
 def graphql_server():
     if request.content_type.startswith("multipart/form-data"):
         data = combine_multipart_data(

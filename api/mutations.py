@@ -13,13 +13,14 @@
 
 import os.path
 import requests
-
-from datetime import date
 from ariadne import convert_kwargs_to_snake_case
 from api import db
-from api.models import Post, Person, Person_put, Booking_put, Booking_create
+from api.models import Post, Person, PersonPut, BookingPut, BookingCreate
 from decouple import config
+
+
 address = config('address')
+ADDRESS_CONVERTER_SERVICE = config('ADDRESS_CONVERTER_SERVICE')
 
 
 @convert_kwargs_to_snake_case
@@ -89,6 +90,7 @@ def delete_post_resolver(obj, info, id_source):
 
     return payload
 
+
 # methods for person
 @convert_kwargs_to_snake_case
 def create_post_resolver_person(obj, info, name, age, city, country, gender):
@@ -144,7 +146,7 @@ def update_post_resolver_person(obj, info, id_person, age=None, city=None, count
                                 gender=None):
     try:
         url = address + '/person/' + id_person
-        put = Person_put(age, city, country, name, gender)
+        put = PersonPut(age, city, country, name, gender)
         response = requests.put(url, json=put.to_dict())
         payload = {
             "success": True,
@@ -162,15 +164,12 @@ def update_post_resolver_person(obj, info, id_person, age=None, city=None, count
 def ocr_converter_resolver(obj, info, file: any, language: str, format: str, converter : str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = "http://127.0.0.1:5003/convert"
+    url = ADDRESS_CONVERTER_SERVICE
 
     payload = {'language': language,
                'format': format,
                'convert': converter}
-    files = [
-        ('file', (file.filename, open(path, 'rb'),
-                  'application/octet-stream'))
-    ]
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
 
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
@@ -181,12 +180,14 @@ def ocr_converter_resolver(obj, info, file: any, language: str, format: str, con
     }
     return payloads
 
+
 @convert_kwargs_to_snake_case
-def image_converter_resolver(obj, info, file: any, color: str, rotate: str, vertical_flip: str, horizontal_flip: str,
-                             height: str, width: str, format: str, convert: str):
+def image_converter_resolver(obj, info, file: any, color: str, rotate: str, vertical_flip: str,
+                             horizontal_flip: str, height: str, width: str, format: str,
+                             convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = "http://127.0.0.1:5003/convert"
+    url = ADDRESS_CONVERTER_SERVICE
 
     payload = {'color': color,
                'rotate': rotate,
@@ -196,10 +197,7 @@ def image_converter_resolver(obj, info, file: any, color: str, rotate: str, vert
                'width': width,
                'format': format,
                'convert': convert}
-    files = [
-        ('file', (file.filename, open(path, 'rb'),
-                  'application/octet-stream'))
-    ]
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
 
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
@@ -209,19 +207,17 @@ def image_converter_resolver(obj, info, file: any, color: str, rotate: str, vert
         "post": response.json()
     }
     return payloads
+
 
 @convert_kwargs_to_snake_case
 def metadata_converter_resolver(obj, info, file: any, format: str, convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = "http://127.0.0.1:5003/convert"
+    url = ADDRESS_CONVERTER_SERVICE
 
     payload = {'format': format,
                'convert': convert}
-    files = [
-        ('file', (file.filename, open(path, 'rb'),
-                  'application/octet-stream'))
-    ]
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
 
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
@@ -232,20 +228,19 @@ def metadata_converter_resolver(obj, info, file: any, format: str, convert: str)
     }
     return payloads
 
+
 @convert_kwargs_to_snake_case
-def translator_converter_resolver(obj, info, file: any, language_in: str, language_out: str, format: str, convert: str):
+def translator_converter_resolver(obj, info, file: any, language_in: str, language_out: str,
+                                  format: str, convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = "http://127.0.0.1:5003/convert"
+    url = ADDRESS_CONVERTER_SERVICE
 
     payload = {'language_in': language_in,
                'language_out': language_out,
                'format': format,
                'convert': convert}
-    files = [
-        ('file', (file.filename, open(path, 'rb'),
-                  'application/octet-stream'))
-    ]
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
 
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
@@ -255,6 +250,7 @@ def translator_converter_resolver(obj, info, file: any, language_in: str, langua
         "post": response.json()
     }
     return payloads
+
 
 @convert_kwargs_to_snake_case
 def delete_post_resolver_person(obj, info, id_person):
@@ -283,7 +279,7 @@ def create_post_resolver_booking(obj, info, description, subject, person_id, res
         url = address + '/booking'
         print(date)
         print("entrada bookin create")
-        post = Booking_create(
+        post = BookingCreate(
             description=description,
             subject=subject,
             person_id=person_id,
@@ -317,7 +313,7 @@ def update_post_resolver_booking(obj, info, id_booking, description=None, subjec
                                  start_time=None, state=None, type=None):
     try:
         url = address + '/booking/' + id_booking
-        put = Booking_put(description, subject, person_id, resource_id, date, end_time, start_time,
+        put = BookingPut(description, subject, person_id, resource_id, date, end_time, start_time,
                           state, type)
         response = requests.put(url, json=put.to_dict())
         payload = {
@@ -350,19 +346,18 @@ def delete_post_resolver_booking(obj, info, id_booking):
         }
 
     return payload
-=======
+
+
+@convert_kwargs_to_snake_case
 def waptxt_converter_resolver(obj, info, file: any, format: str, convert: str, language_in: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = "http://127.0.0.1:5003/convert"
+    url = ADDRESS_CONVERTER_SERVICE
 
     payload = {'format': format,
                'convert': convert,
                'language_in': language_in}
-    files = [
-        ('file', (file.filename, open(path, 'rb'),
-                  'application/octet-stream'))
-    ]
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
 
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
@@ -373,11 +368,13 @@ def waptxt_converter_resolver(obj, info, file: any, format: str, convert: str, l
     }
     return payloads
 
+
 @convert_kwargs_to_snake_case
-def video_converter_resolver(obj, info, file: any, frame: str, width: str, height: str, color: str, format: str, convert: str):
+def video_converter_resolver(obj, info, file: any, frame: str, width: str, height: str, color: str,
+                             format: str, convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = "http://127.0.0.1:5003/convert"
+    url = ADDRESS_CONVERTER_SERVICE
 
     payload = {'frame': frame,
                'width': width,
@@ -385,10 +382,7 @@ def video_converter_resolver(obj, info, file: any, frame: str, width: str, heigh
                'color': color,
                'format': format,
                'convert': convert}
-    files = [
-        ('file', (file.filename, open(path, 'rb'),
-                  'application/octet-stream'))
-    ]
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
 
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
@@ -399,12 +393,13 @@ def video_converter_resolver(obj, info, file: any, frame: str, width: str, heigh
     }
     return payloads
 
+
 @convert_kwargs_to_snake_case
-def audio_converter_resolver(obj, info, file: any, acodex: str, bitrate: str, sample_rate: str, audio_channel: str,
-                             format: str, convert: str):
+def audio_converter_resolver(obj, info, file: any, acodex: str, bitrate: str, sample_rate: str,
+                             audio_channel: str, format: str, convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = "http://127.0.0.1:5003/convert"
+    url = ADDRESS_CONVERTER_SERVICE
 
     payload = {'frame': acodex,
                'width': bitrate,
@@ -412,10 +407,7 @@ def audio_converter_resolver(obj, info, file: any, acodex: str, bitrate: str, sa
                'color': audio_channel,
                'format': format,
                'convert': convert}
-    files = [
-        ('file', (file.filename, open(path, 'rb'),
-                  'application/octet-stream'))
-    ]
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
 
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
