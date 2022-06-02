@@ -25,7 +25,7 @@ from api.mutations import create_post_resolver, update_post_resolver, delete_pos
     delete_post_resolver_person, create_post_resolver_person, update_post_resolver_person, \
     ocr_converter_resolver, image_converter_resolver, metadata_converter_resolver, \
     translator_converter_resolver, waptxt_converter_resolver, video_converter_resolver, \
-    audio_converter_resolver
+    audio_converter_resolver, iris_recognition_resolver
 from flask_cors import CORS
 
 CORS(app)
@@ -62,6 +62,10 @@ mutation.set_field("convert_translator", translator_converter_resolver)
 mutation.set_field("convert_waptxt", waptxt_converter_resolver)
 mutation.set_field("convert_video", video_converter_resolver)
 mutation.set_field("convert_audio", audio_converter_resolver)
+
+mutation.set_field("iris_recognition", iris_recognition_resolver)
+
+
 
 type_defs = load_schema_from_path("schema.graphql")
 schema = make_executable_schema(

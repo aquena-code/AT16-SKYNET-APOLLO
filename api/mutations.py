@@ -21,6 +21,7 @@ from decouple import config
 
 address = config('address')
 ADDRESS_CONVERTER_SERVICE = config('ADDRESS_CONVERTER_SERVICE')
+ADDRESS_MACHINE_SERVICE = config('ADDRESS_MACHINE_SERVICE')
 
 
 @convert_kwargs_to_snake_case
@@ -407,6 +408,25 @@ def audio_converter_resolver(obj, info, file: any, acodex: str, bitrate: str, sa
                'color': audio_channel,
                'format': format,
                'convert': convert}
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
+    headers = {}
+
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+    payloads = {
+        "success": True,
+        "post": response.json()
+    }
+    return payloads
+
+
+@convert_kwargs_to_snake_case
+def iris_recognition_resolver(obj, info, file: any, percentage: float):
+    path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
+    file.save(path)
+    url = ADDRESS_MACHINE_SERVICE
+
+    payload = {'percentage': percentage}
     files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
 

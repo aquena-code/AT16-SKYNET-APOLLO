@@ -185,6 +185,17 @@ type audio_converter{
 }
 
 
+type result_iris_recognition{
+    status: Int!
+    message: String!
+}
+
+type iris_recognition_G6{
+    success: Boolean!
+    errors: [String]
+    post: result_iris_recognition
+}
+
 type Mutation {
     createPost(name: String!, type: String!, model: String!, state: String!): PostResult!
     updatePost(id_source: ID!, name: String!  ): PostResult!
@@ -203,4 +214,5 @@ type Mutation {
     convert_waptxt(file: Upload!, format: String!, convert: String!, language_in: String!): waptxt_converter
     convert_video(file: Upload!, frame: String!, width: String!, height: String!, color: String!, format: String!, convert: String!): video_converter
     convert_audio(file: Upload!, acodex: String!, bitrate: String!, sample_rate: String!, audio_channel: String!, format: String!, convert: String!): audio_converter
+    iris_recognition(file: Upload!, percentage: Float!): iris_recognition_G6
 }
