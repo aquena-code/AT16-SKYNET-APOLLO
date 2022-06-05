@@ -11,8 +11,11 @@
 # with Jalasoft .
 #
 
-from ariadne import load_schema_from_path, make_executable_schema, snake_case_fallback_resolvers, ObjectType, upload_scalar
-from api.machine_learning.mutations import iris_recognition_resolver, iris_train_resolver, object_recognizer_resolver
+from ariadne import load_schema_from_path, make_executable_schema, snake_case_fallback_resolvers, \
+                    ObjectType, upload_scalar
+from api.machine_learning.mutations import iris_recognition_resolver, iris_train_resolver, \
+                                        object_recognizer_resolver, vggface_recognition_resolver, \
+                                        emotion_recognition_resolver
 
 
 query = ObjectType("Query")
@@ -21,9 +24,12 @@ mutation = ObjectType("Mutation")
 mutation.set_field("iris_recognition", iris_recognition_resolver)
 mutation.set_field("iris_train", iris_train_resolver)
 mutation.set_field("object_recognizer", object_recognizer_resolver)
+mutation.set_field("vggface_recognition", vggface_recognition_resolver)
+mutation.set_field("emotion_recognition", emotion_recognition_resolver)
 
 type_defs = load_schema_from_path("api/machine_learning/schema.graphql")
 schema_machine = make_executable_schema(
     type_defs, query, mutation, snake_case_fallback_resolvers, upload_scalar
 )
-query_mutation_machine = ["iris_recognition", "iris_train", "object_recognizer"]
+query_mutation_machine = ["iris_recognition", "iris_train", "object_recognizer",
+                          "vggface_recognition", "emotion_recognition"]

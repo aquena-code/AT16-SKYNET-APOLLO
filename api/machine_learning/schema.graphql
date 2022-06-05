@@ -49,8 +49,22 @@ type machine_learning{
     post: object_recognition
 }
 
+type ml_vggface{
+    success: Boolean!
+    errors: [String]
+    post: String!
+}
+
+type ml_emotion{
+    success: Boolean!
+    errors: [String]
+    post: String!
+}
+
 type Mutation {
     iris_recognition(file: Upload!, percentage: Float!): iris_recognition_G6
     iris_train(zip: Upload!): iris_recognition_G6
     object_recognizer(file: Upload!, name: String!, model: String!, percentage: Float!): machine_learning
+    vggface_recognition(file: Upload!, image: Upload!): ml_vggface
+    emotion_recognition(file: Upload!): ml_emotion
 }
