@@ -11,33 +11,27 @@
 # with Jalasoft .
 #
 
-import os.path
 import requests
 from ariadne import convert_kwargs_to_snake_case
 from decouple import config
 
 
-address = config('address')
-ADDRESS_CONVERTER_SERVICE = config('ADDRESS_CONVERTER_SERVICE')
-ADDRESS_MACHINE_SERVICE = config('ADDRESS_MACHINE_SERVICE')
+ADDRESS_REPORTING_SERVICE = config('ADDRESS_REPORTING_SERVICE')
 
 
 # methods for person
 @convert_kwargs_to_snake_case
-def create_post_resolver_person(obj, info, name, age, city, country, gender):
+def city_date_resolver(obj, info, start_date, end_date):
     try:
-        url = address + '/person'
+        url = ADDRESS_REPORTING_SERVICE + '/search_report_fill_time_location'
 
-        post = Person(
-            person_age=age,
-            person_city = city,
-            person_country = country,
-            person_full_name = name,
-            person_gender = gender
-        )
-        response = requests.post(url, json=post.to_dict())
+        payload = {'start_date': start_date, 'end_date': end_date}
+        files = None
+        headers = {}
+
+        response = requests.request("POST", url, headers=headers, data=payload,
+                                    files=files)
         payload = {
-
             "success": True,
             "post": response.json()
         }
@@ -51,42 +45,3 @@ def create_post_resolver_person(obj, info, name, age, city, country, gender):
         }
 
     return payload
-
-
-@convert_kwargs_to_snake_case
-def ocr_converter_resolver(obj, info, file: any, language: str, format: str, converter : str):
-    path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
-    file.save(path)
-    url = ADDRESS_CONVERTER_SERVICE
-
-    payload = {'language': language,
-               'format': format,
-               'convert': converter}
-    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
-    headers = {}
-
-    response = requests.request("POST", url, headers=headers, data=payload, files=files)
-
-    payloads = {
-        "success": True,
-        "post": response.json()
-    }
-    return payloads
-
-
-@convert_kwargs_to_snake_case
-def iris_recognition_resolver(obj, info, file: any, percentage: float):
-    path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
-    file.save(path)
-    url = ADDRESS_MACHINE_SERVICE + '/iris_recognition'
-    payload = {'percentage': percentage}
-    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
-    headers = {}
-
-    response = requests.request("POST", url, headers=headers, data=payload, files=files)
-
-    payloads = {
-        "success": True,
-        "post": response.json()
-    }
-    return payloads

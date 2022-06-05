@@ -18,201 +18,21 @@ schema {
 
 scalar Upload
 
-type Resource {
-    _id: ID!
-    delete: Int!
-    name: String!
-    resource_model: String!
-    resource_name: String!
-    resource_state: String!
-    resource_type: String!
-}
-type Person {
-    _id: ID!
-    delete: Int!
-    person_age: String!
+type CityDateResult {
     person_city: String!
-    person_country: String!
-    person_full_name: String!
-    person_gender: String!
+    quantity: Int!
 }
-type details{
-    description: String!
-    subject: String!
-}
-type schedule{
-    date: String!
-    start_time: String!
-    end_time: String!
-}
-type resource{
-    id: [String!]
-}
-type person{
-    id: String!
-}
-type Booking {
-    _id: ID!
-    delete: Int!
-    details: details!
-    schedule: schedule!
-    state: String!
-    type: String!
-    resource: resource!
-    person: person!
-}
+
 type PostResult {
     success: Boolean!
     errors: [String]
-    post: Resource
-}
-
-type PostPerson {
-    success: Boolean!
-    errors: [String]
-    post: Person
-}
-
-type PostsResult {
-    success: Boolean!
-    errors: [String]
-    posts: [Resource]
-}
-type PostsResultPerson {
-    success: Boolean!
-    errors: [String]
-    posts: [Person]
-}
-type PostBooking {
-    success: Boolean!
-    errors: [String]
-    post: Booking
-}
-
-type PostsResultBooking {
-    success: Boolean!
-    errors: [String]
-    posts: [Booking]
+    posts: [CityDateResult]
 }
 
 type Query {
-    listPosts: PostsResult!
-    listPostsPerson: PostsResultPerson!
-    listPostsBooking: PostsResultBooking!
-    getPost(id: ID!): PostResult!
-    getPostPerson(id: ID!): PostPerson!
-    getPostBooking(id: ID!): PostBooking!
-    getPostName(name: String!): PostResult!
-    getPostNamePerson(name: String!): PostPerson!
-
-}
-
-type result_convert_ocr{
-    status: Int!
-    message: String!
-}
-
-type ocr_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_ocr
-}
-
-type result_convert_image{
-    status: Int!
-    message: String!
-}
-
-type image_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_image
-}
-
-type result_convert_metadata{
-    status: Int!
-    message: String!
-}
-
-type metadata_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_metadata
-}
-
-type result_convert_translator{
-    status: Int!
-    message: String!
-}
-
-type translator_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_translator
-}
-
-type result_convert_waptxt{
-    status: Int!
-    message: String!
-}
-
-type waptxt_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_waptxt
-}
-
-type result_convert_video{
-    status: Int!
-    message: String!
-}
-
-type video_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_video
-}
-
-type result_convert_audio{
-    status: Int!
-    message: String!
-}
-
-type audio_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_audio
-}
-
-
-type result_iris_recognition{
-    status: Int!
-    message: String!
-}
-
-type iris_recognition_G6{
-    success: Boolean!
-    errors: [String]
-    post: result_iris_recognition
+    _ : Boolean
 }
 
 type Mutation {
-    createPost(name: String!, type: String!, model: String!, state: String!): PostResult!
-    updatePost(id_source: ID!, name: String!  ): PostResult!
-    deletePost(id_source: ID): PostResult!
-    createPerson(name: String!, age: String!, city:String!, country:String!, gender:String! ): PostPerson!
-    updatePerson(id_person: ID!, city: String): PostPerson!
-    convert_ocr(file: Upload!, language: String!, format: String!, converter: String!): ocr_converter
-    deletePerson(id_person: ID): PostPerson!
-    createBooking(description: String!, subject:String!, person_id:String!, resource_id:String!, date:String!, end_time:String!, start_time:String!, state:String!, type:String!): PostBooking!
-    updateBooking(id_booking: ID!, description: String, subject:String, person_id:String, resource_id:String, date:String, end_time:String, start_time:String, state:String, type:String): PostBooking!
-    deleteBooking(id_booking: ID): PostBooking!
-    convert_image(file: Upload!, color: String!, rotate: String!, vertical_flip: String!, horizontal_flip: String!, height: String!,
-    width: String!, format: String!, convert: String!): image_converter
-    convert_metadata(file: Upload!, format: String!, convert: String!): metadata_converter
-    convert_translator(file: Upload!, language_in: String!, language_out: String!, format: String!, convert: String!): translator_converter
-    convert_waptxt(file: Upload!, format: String!, convert: String!, language_in: String!): waptxt_converter
-    convert_video(file: Upload!, frame: String!, width: String!, height: String!, color: String!, format: String!, convert: String!): video_converter
-    convert_audio(file: Upload!, acodex: String!, bitrate: String!, sample_rate: String!, audio_channel: String!, format: String!, convert: String!): audio_converter
-    iris_recognition(file: Upload!, percentage: Float!): iris_recognition_G6
+    city_date(start_date: String!, end_date: String!): PostResult!
 }

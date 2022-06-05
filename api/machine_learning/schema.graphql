@@ -33,6 +33,24 @@ type iris_recognition_G6{
     post: result_iris_recognition
 }
 
+type object_recognizer_result{
+    Name: String!
+    Time: String!
+    Percentage: Float!
+}
+
+type object_recognition{
+    Object: object_recognizer_result!
+}
+
+type machine_learning{
+    success: Boolean!
+    errors: [String]
+    post: object_recognition
+}
+
 type Mutation {
     iris_recognition(file: Upload!, percentage: Float!): iris_recognition_G6
+    iris_train(zip: Upload!): iris_recognition_G6
+    object_recognizer(file: Upload!, name: String!, model: String!, percentage: Float!): machine_learning
 }

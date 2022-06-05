@@ -39,13 +39,34 @@ def iris_recognition_resolver(obj, info, file: any, percentage: float):
 
 
 @convert_kwargs_to_snake_case
-def iris_train_resolver(obj, info, file: any):
-    path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
-    file.save(path)
+def iris_train_resolver(obj, info, zip: any):
+    path = os.path.join(r"saved_files/machine_service/uploads/", zip.filename)
+    zip.save(path)
     url = ADDRESS_MACHINE_SERVICE + '/iris_recognition_train'
     payload = {}
+    files = [('zip', (zip.filename, open(path, 'rb'), 'application/octet-stream'))]
+    headers = {}
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+    payloads = {
+        "success": True,
+        "post": response.json()
+    }
+    return payloads
+
+
+@convert_kwargs_to_snake_case
+def object_recognizer_resolver(obj, info, file: any, name: str, model: str, percentage: float):
+    path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
+    file.save(path)
+    url = ADDRESS_MACHINE_SERVICE + '/object_recognizer'
+
+    payload = {'name': name,
+               'model': model,
+               'percentage': percentage}
     files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
+
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
     payloads = {

@@ -14,6 +14,7 @@
 from api.booking.app import schema_booking, query_mutation_booking
 from api.convertor.app import schema_convertor, query_mutation_convertor
 from api.machine_learning.app import schema_machine, query_mutation_machine
+from api.reporting.app import schema_reporting, query_mutation_reporting
 import json
 from ariadne import graphql_sync, combine_multipart_data
 from ariadne.constants import PLAYGROUND_HTML
@@ -46,13 +47,18 @@ def graphql_server():
             query_mutation = data['query'].split()[4]
     else:
         data = request.get_json()
-        query_mutation = data['query'].split()[3]
+        if '(' in data['query'].split()[3]:
+            query_mutation = data['query'].split()[3].split('(')[0]
+        else:
+            query_mutation = data['query'].split()[3]
     if query_mutation in query_mutation_booking:
         schema = schema_booking
     elif query_mutation in query_mutation_machine:
         schema = schema_machine
     elif query_mutation in query_mutation_convertor:
         schema = schema_convertor
+    elif query_mutation in query_mutation_reporting:
+        schema = schema_reporting
     success, result = graphql_sync(
         schema,
         data,
