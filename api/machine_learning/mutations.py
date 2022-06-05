@@ -1,0 +1,55 @@
+#
+# @mutations.py Copyright (c)
+# 2643 Av  Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+# 1376 Av General Inofuentes esquina calle 20, La Paz, Bolivia.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of
+# Jalasoft, ("Condidential Information"). You shall # not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with Jalasoft .
+#
+
+import os.path
+import requests
+from ariadne import convert_kwargs_to_snake_case
+from decouple import config
+
+
+ADDRESS_MACHINE_SERVICE = config('ADDRESS_MACHINE_SERVICE')
+
+
+@convert_kwargs_to_snake_case
+def iris_recognition_resolver(obj, info, file: any, percentage: float):
+    path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
+    file.save(path)
+    url = ADDRESS_MACHINE_SERVICE + '/iris_recognition'
+    payload = {'percentage': percentage}
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
+    headers = {}
+
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+    payloads = {
+        "success": True,
+        "post": response.json()
+    }
+    return payloads
+
+
+@convert_kwargs_to_snake_case
+def iris_train_resolver(obj, info, file: any):
+    path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
+    file.save(path)
+    url = ADDRESS_MACHINE_SERVICE + '/iris_recognition_train'
+    payload = {}
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
+    headers = {}
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+    payloads = {
+        "success": True,
+        "post": response.json()
+    }
+    return payloads

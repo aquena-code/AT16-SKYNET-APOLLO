@@ -13,7 +13,8 @@
 
 import json
 
-from app import db
+# from app import db
+from api import db
 
 
 class Post(db.Model):

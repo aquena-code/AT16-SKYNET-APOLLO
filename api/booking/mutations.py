@@ -15,7 +15,7 @@ import os.path
 import requests
 from ariadne import convert_kwargs_to_snake_case
 from api import db
-from api.models import Post, Person, PersonPut, BookingPut, BookingCreate
+from api.booking.models import Post, Person, PersonPut, BookingPut, BookingCreate
 from decouple import config
 
 
@@ -424,8 +424,7 @@ def audio_converter_resolver(obj, info, file: any, acodex: str, bitrate: str, sa
 def iris_recognition_resolver(obj, info, file: any, percentage: float):
     path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_MACHINE_SERVICE
-
+    url = ADDRESS_MACHINE_SERVICE + '/iris_recognition'
     payload = {'percentage': percentage}
     files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
