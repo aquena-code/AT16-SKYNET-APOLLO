@@ -12,8 +12,6 @@
 #
 
 import json
-
-# from app import db
 from api import db
 
 
@@ -174,6 +172,5 @@ class BookingCreate(db.Model):
         string_to_convert += '"type": ' + '"' + self.type + '"' + ','
         string_cleared = string_to_convert[:-1]
         string_cleared += "}"
-        print(string_cleared)
         json_object = json.loads(string_cleared)
         return json_object

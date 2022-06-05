@@ -11,7 +11,7 @@
 # with Jalasoft .
 #
 
-import os.path
+
 import requests
 from ariadne import convert_kwargs_to_snake_case
 from api import db
@@ -81,7 +81,6 @@ def delete_post_resolver(obj, info, id_source):
                    }
 
     except AttributeError:
-        print(db)
         payload = {
             "success": False,
             "errors": ["Not found"]
@@ -170,7 +169,6 @@ def delete_post_resolver_person(obj, info, id_person):
                    }
 
     except AttributeError:
-        print(db)
         payload = {
             "success": False,
             "errors": ["Not found"]
@@ -184,8 +182,6 @@ def create_post_resolver_booking(obj, info, description, subject, person_id, res
                                  end_time, start_time, state, type):
     try:
         url = address + '/booking'
-        print(date)
-        print("entrada bookin create")
         post = BookingCreate(
             description=description,
             subject=subject,
@@ -247,7 +243,6 @@ def delete_post_resolver_booking(obj, info, id_booking):
                    }
 
     except AttributeError:
-        print(db)
         payload = {
             "success": False,
             "errors": ["Not found"]

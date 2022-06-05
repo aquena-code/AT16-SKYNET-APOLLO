@@ -19,7 +19,6 @@ import json
 from ariadne import graphql_sync, combine_multipart_data
 from ariadne.constants import PLAYGROUND_HTML
 from flask import request, jsonify
-
 from api import app
 from flask_cors import CORS
 
@@ -65,6 +64,5 @@ def graphql_server():
         context_value=request,
         debug=app.debug
     )
-
     status_code = 200 if success else 400
     return jsonify(result), status_code
