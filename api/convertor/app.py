@@ -32,9 +32,6 @@ mutation.set_field("convert_video", video_converter_resolver)
 mutation.set_field("convert_audio", audio_converter_resolver)
 
 type_defs = load_schema_from_path("api/convertor/schema.graphql")
-# schema_convertor = make_executable_schema(
-#     type_defs, query, mutation, snake_case_fallback_resolvers, upload_scalar
-# )
 schema_convertor = make_executable_schema(
     type_defs, query, mutation, snake_case_fallback_resolvers, upload_scalar
 )

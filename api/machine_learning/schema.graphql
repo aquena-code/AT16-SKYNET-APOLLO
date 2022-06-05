@@ -22,31 +22,27 @@ type Query {
     _ : Boolean
 }
 
-type result_iris_recognition{
+type result_iris_recognition {
     status: Int!
     message: String!
 }
 
-type iris_recognition_G6{
+type iris_recognition_G6 {
     success: Boolean!
     errors: [String]
     post: result_iris_recognition
 }
 
-type object_recognizer_result{
+type object_recognizer_result {
     Name: String!
     Time: String!
     Percentage: Float!
 }
 
-type object_recognition{
-    Object: object_recognizer_result!
-}
-
-type machine_learning{
+type machine_learning {
     success: Boolean!
     errors: [String]
-    post: object_recognition
+    post: [object_recognizer_result]
 }
 
 type ml_vggface{

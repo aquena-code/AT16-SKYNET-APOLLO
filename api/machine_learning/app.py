@@ -16,8 +16,11 @@ from ariadne import load_schema_from_path, make_executable_schema, snake_case_fa
 from api.machine_learning.mutations import iris_recognition_resolver, iris_train_resolver, \
                                         object_recognizer_resolver, vggface_recognition_resolver, \
                                         emotion_recognition_resolver
+from flask_cors import CORS
+from api import app
 
 
+CORS(app)
 query = ObjectType("Query")
 mutation = ObjectType("Mutation")
 

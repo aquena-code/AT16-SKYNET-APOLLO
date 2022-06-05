@@ -18,15 +18,60 @@ schema {
 
 scalar Upload
 
+type DateGenderResult {
+    person_gender: String!
+    morning: Int!
+    afternoon: Int!
+}
+
+type PostResultGenderDate {
+    success: Boolean!
+    errors: [String]
+    post: [DateGenderResult]
+}
+
 type CityDateResult {
     person_city: String!
     quantity: Int!
 }
 
+type PostResultCity {
+    success: Boolean!
+    errors: [String]
+    post: [CityDateResult]
+}
+
+type ReportingResult {
+    date: String!
+    start_time: String!
+    end_time: String!
+    state: String!
+    resource_name: String!
+    resource_type: String!
+    resource_model: String!
+    resource_state: String!
+    person_full_name: String!
+    person_age: Int!
+    person_country: String!
+    person_city: String!
+    person_gender: String!
+}
+
 type PostResult {
     success: Boolean!
     errors: [String]
-    posts: [CityDateResult]
+    post: [ReportingResult]
+}
+
+type CountryDateResult {
+    person_country: String!
+    quantity: Int!
+}
+
+type PostResultCountry {
+    success: Boolean!
+    errors: [String]
+    post: [CountryDateResult]
 }
 
 type Query {
@@ -34,5 +79,10 @@ type Query {
 }
 
 type Mutation {
-    city_date(start_date: String!, end_date: String!): PostResult!
+    city_date(start_date: String!, end_date: String!): PostResultCity!
+    gender_date(open_time: String!, close_time: String!): PostResultGenderDate!
+    age_gender(person_age: Int!, person_gender: String!): PostResult!
+    country_date(start_date: String!, end_date: String!): PostResultCountry!
+    model_type(model: String!, type: String!): PostResult!
+    state_gender(state: String!, person_gender: String!): PostResult!
 }
