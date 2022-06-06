@@ -74,3 +74,50 @@ def object_recognizer_resolver(obj, info, file: any, name: str, model: str, perc
         "post": response.json()
     }
     return payloads
+
+
+@convert_kwargs_to_snake_case
+def vggface_recognition_resolver(obj, info, file: any, image: any):
+    try:
+        path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
+        file.save(path)
+        path_image = os.path.join(r"saved_files/machine_service/uploads/", image.filename)
+        image.save(path_image)
+        url = ADDRESS_MACHINE_SERVICE + "/vggface_search_person"
+
+        payload = {}
+        files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream')),
+                 ('person', (image.filename, open(path_image, 'rb'), 'application/octet-stream'))]
+        headers = {}
+
+        response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+        payloads = {
+            "success": True,
+            "post": str(response.json())
+        }
+    except ValueError:
+        payload = {
+            "success": False,
+            "errors": ["Not found"]
+        }
+    return payloads
+
+
+@convert_kwargs_to_snake_case
+def emotion_recognition_resolver(obj, info, file: any):
+    path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
+    file.save(path)
+    url = ADDRESS_MACHINE_SERVICE + "/emotion"
+
+    payload = {}
+    files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
+    headers = {}
+
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+    payloads = {
+        "success": True,
+        "post": response.json()
+    }
+    return payloads
