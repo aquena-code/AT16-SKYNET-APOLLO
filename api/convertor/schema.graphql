@@ -1,0 +1,111 @@
+#
+# @schema.graphql Copyright (c)
+# 2643 Av  Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+# 1376 Av General Inofuentes esquina calle 20, La Paz, Bolivia.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of
+# Jalasoft, ("Condidential Information"). You shall # not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with Jalasoft .
+#
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+scalar Upload
+
+type Query {
+    _ : Boolean
+}
+
+type result_convert_ocr{
+    status: Int!
+    message: String!
+}
+
+type ocr_converter{
+    success: Boolean!
+    errors: [String]
+    post: result_convert_ocr
+}
+
+type result_convert_image{
+    status: Int!
+    message: String!
+}
+
+type image_converter{
+    success: Boolean!
+    errors: [String]
+    post: result_convert_image
+}
+
+type result_convert_metadata{
+    status: Int!
+    message: String!
+}
+
+type metadata_converter{
+    success: Boolean!
+    errors: [String]
+    post: result_convert_metadata
+}
+
+type result_convert_translator{
+    status: Int!
+    message: String!
+}
+
+type translator_converter{
+    success: Boolean!
+    errors: [String]
+    post: result_convert_translator
+}
+
+type result_convert_waptxt{
+    status: Int!
+    message: String!
+}
+
+type waptxt_converter{
+    success: Boolean!
+    errors: [String]
+    post: result_convert_waptxt
+}
+
+type result_convert_video{
+    status: Int!
+    message: String!
+}
+
+type video_converter{
+    success: Boolean!
+    errors: [String]
+    post: result_convert_video
+}
+
+type result_convert_audio{
+    status: Int!
+    message: String!
+}
+
+type audio_converter{
+    success: Boolean!
+    errors: [String]
+    post: result_convert_audio
+}
+
+type Mutation {
+    convert_ocr(file: Upload!, language: String!, format: String!, converter: String!): ocr_converter
+    convert_image(file: Upload!, color: String!, rotate: String!, vertical_flip: String!, horizontal_flip: String!, height: String!,
+    width: String!, format: String!, convert: String!): image_converter
+    convert_metadata(file: Upload!, format: String!, convert: String!): metadata_converter
+    convert_translator(file: Upload!, language_in: String!, language_out: String!, format: String!, convert: String!): translator_converter
+    convert_waptxt(file: Upload!, format: String!, convert: String!, language_in: String!): waptxt_converter
+    convert_video(file: Upload!, frame: String!, width: String!, height: String!, color: String!, format: String!, convert: String!): video_converter
+    convert_audio(file: Upload!, acodex: String!, bitrate: String!, sample_rate: String!, audio_channel: String!, format: String!, convert: String!): audio_converter
+}

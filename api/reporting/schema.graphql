@@ -1,0 +1,88 @@
+#
+# @schema.graphql Copyright (c)
+# 2643 Av  Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+# 1376 Av General Inofuentes esquina calle 20, La Paz, Bolivia.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of
+# Jalasoft, ("Condidential Information"). You shall # not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with Jalasoft .
+#
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+scalar Upload
+
+type DateGenderResult {
+    person_gender: String!
+    morning: Int!
+    afternoon: Int!
+}
+
+type PostResultGenderDate {
+    success: Boolean!
+    errors: [String]
+    post: [DateGenderResult]
+}
+
+type CityDateResult {
+    person_city: String!
+    quantity: Int!
+}
+
+type PostResultCity {
+    success: Boolean!
+    errors: [String]
+    post: [CityDateResult]
+}
+
+type ReportingResult {
+    date: String!
+    start_time: String!
+    end_time: String!
+    state: String!
+    resource_name: String!
+    resource_type: String!
+    resource_model: String!
+    resource_state: String!
+    person_full_name: String!
+    person_age: Int!
+    person_country: String!
+    person_city: String!
+    person_gender: String!
+}
+
+type PostResult {
+    success: Boolean!
+    errors: [String]
+    post: [ReportingResult]
+}
+
+type CountryDateResult {
+    person_country: String!
+    quantity: Int!
+}
+
+type PostResultCountry {
+    success: Boolean!
+    errors: [String]
+    post: [CountryDateResult]
+}
+
+type Query {
+    _ : Boolean
+}
+
+type Mutation {
+    city_date(start_date: String!, end_date: String!): PostResultCity!
+    gender_date(open_time: String!, close_time: String!): PostResultGenderDate!
+    age_gender(person_age: Int!, person_gender: String!): PostResult!
+    country_date(start_date: String!, end_date: String!): PostResultCountry!
+    model_type(model: String!, type: String!): PostResult!
+    state_gender(state: String!, person_gender: String!): PostResult!
+}
