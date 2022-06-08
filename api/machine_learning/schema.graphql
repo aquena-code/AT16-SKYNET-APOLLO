@@ -1,0 +1,69 @@
+#
+# @schema.graphql Copyright (c)
+# 2643 Av  Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+# 1376 Av General Inofuentes esquina calle 20, La Paz, Bolivia.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of
+# Jalasoft, ("Condidential Information"). You shall # not
+# disclose such Confidential Information and shall use it only in
+# accordance with the terms of the license agreement you entered into
+# with Jalasoft .
+#
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+scalar Upload
+
+type Query {
+    _ : Boolean
+}
+
+type result_iris_recognition {
+    status: Int!
+    message: String!
+}
+
+type iris_recognition_G6 {
+    success: Boolean!
+    errors: [String]
+    post: result_iris_recognition
+}
+
+type object_recognizer_result {
+    Name: String!
+    Time: String!
+    Percentage: Float!
+}
+type object_machine {
+    Object: object_recognizer_result
+}
+
+type machine_learning {
+    success: Boolean!
+    errors: [String]
+    post: object_machine
+}
+
+type ml_vggface{
+    success: Boolean!
+    errors: [String]
+    post: String!
+}
+
+type ml_emotion{
+    success: Boolean!
+    errors: [String]
+    post: String!
+}
+
+type Mutation {
+    iris_recognition(file: Upload!, percentage: Float!): iris_recognition_G6
+    iris_train(zip: Upload!): iris_recognition_G6
+    object_recognizer(file: Upload!, name: String!, model: String!, percentage: Float!): machine_learning
+    vggface_recognition(file: Upload!, image: Upload!): ml_vggface
+    emotion_recognition(file: Upload!): ml_emotion
+}

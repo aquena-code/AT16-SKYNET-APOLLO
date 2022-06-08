@@ -107,100 +107,14 @@ type Query {
 
 }
 
-type result_convert_ocr{
-    status: Int!
-    message: String!
-}
-
-type ocr_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_ocr
-}
-
-type result_convert_image{
-    status: Int!
-    message: String!
-}
-
-type image_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_image
-}
-
-type result_convert_metadata{
-    status: Int!
-    message: String!
-}
-
-type metadata_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_metadata
-}
-
-type result_convert_translator{
-    status: Int!
-    message: String!
-}
-
-type translator_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_translator
-}
-
-type result_convert_waptxt{
-    status: Int!
-    message: String!
-}
-
-type waptxt_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_waptxt
-}
-
-type result_convert_video{
-    status: Int!
-    message: String!
-}
-
-type video_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_video
-}
-
-type result_convert_audio{
-    status: Int!
-    message: String!
-}
-
-type audio_converter{
-    success: Boolean!
-    errors: [String]
-    post: result_convert_audio
-}
-
-
 type Mutation {
     createPost(name: String!, type: String!, model: String!, state: String!): PostResult!
     updatePost(id_source: ID!, name: String!  ): PostResult!
     deletePost(id_source: ID): PostResult!
     createPerson(name: String!, age: String!, city:String!, country:String!, gender:String! ): PostPerson!
     updatePerson(id_person: ID!, city: String): PostPerson!
-    convert_ocr(file: Upload!, language: String!, format: String!, converter: String!): ocr_converter
     deletePerson(id_person: ID): PostPerson!
     createBooking(description: String!, subject:String!, person_id:String!, resource_id:String!, date:String!, end_time:String!, start_time:String!, state:String!, type:String!): PostBooking!
     updateBooking(id_booking: ID!, description: String, subject:String, person_id:String, resource_id:String, date:String, end_time:String, start_time:String, state:String, type:String): PostBooking!
     deleteBooking(id_booking: ID): PostBooking!
-    convert_image(file: Upload!, color: String!, rotate: String!, vertical_flip: String!, horizontal_flip: String!, height: String!,
-    width: String!, format: String!, convert: String!): image_converter
-    convert_metadata(file: Upload!, format: String!, convert: String!): metadata_converter
-    convert_translator(file: Upload!, language_in: String!, language_out: String!, format: String!, convert: String!): translator_converter
-    convert_waptxt(file: Upload!, format: String!, convert: String!, language_in: String!): waptxt_converter
-    convert_video(file: Upload!, frame: String!, width: String!, height: String!, color: String!, format: String!, convert: String!): video_converter
-    convert_audio(file: Upload!, acodex: String!, bitrate: String!, sample_rate: String!, audio_channel: String!, format: String!, convert: String!): audio_converter
 }
