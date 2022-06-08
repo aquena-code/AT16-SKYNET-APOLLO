@@ -22,9 +22,3 @@ app.config["SQLALCHEMY_DATABASE_URI"] = r
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-
-# @app.route('/')
-# def hello():
-#     url = 'http://127.0.0.1:6002/resource'
-#     response = requests.get(url)
-#     return (response.json())
