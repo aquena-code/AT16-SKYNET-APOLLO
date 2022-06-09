@@ -73,6 +73,7 @@ def object_recognizer_resolver(obj, info, file: any, name: str, model: str, perc
         "success": True,
         "post": response.json()
     }
+    print(payloads)
     return payloads
 
 

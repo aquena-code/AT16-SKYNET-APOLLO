@@ -38,11 +38,14 @@ type object_recognizer_result {
     Time: String!
     Percentage: Float!
 }
+type object_machine {
+    Object: object_recognizer_result
+}
 
 type machine_learning {
     success: Boolean!
     errors: [String]
-    post: [object_recognizer_result]
+    post: object_machine
 }
 
 type ml_vggface{
