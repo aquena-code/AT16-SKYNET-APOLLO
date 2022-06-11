@@ -33,19 +33,11 @@ type iris_recognition_G6 {
     post: result_iris_recognition
 }
 
-type object_recognizer_result {
-    Name: String!
-    Time: String!
-    Percentage: Float!
-}
-type object_machine {
-    Object: object_recognizer_result
-}
 
 type machine_learning {
     success: Boolean!
     errors: [String]
-    post: object_machine
+    post: result_iris_recognition
 }
 
 type ml_vggface{
