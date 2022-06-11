@@ -40,10 +40,9 @@ def graphql_server():
             json.loads(request.form.get("map")),
             dict(request.files)
         )
-        if '(' in data['query'].split()[4]:
-            query_mutation = data['query'].split()[4][:-1]
-        else:
-            query_mutation = data['query'].split()[4]
+        model_string_init = data['query'].find('{')
+        model_string_end = data['query'].find('(', model_string_init)
+        query_mutation = data['query'][model_string_init:model_string_end].split()[1]
     else:
         data = request.get_json()
         if '(' in data['query'].split()[3]:
