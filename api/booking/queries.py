@@ -16,12 +16,13 @@ from decouple import config
 from ariadne import convert_kwargs_to_snake_case
 
 address = config('address')
+ipv4 = config('IPV4')
 
 
 @convert_kwargs_to_snake_case
 def listPosts_resolver(obj, info):
     try:
-        url = address + '/resource'
+        url = ipv4 + address + '/resource'
         response = requests.get(url)
         payload = {
             "success": True,
