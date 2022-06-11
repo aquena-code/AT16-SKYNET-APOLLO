@@ -17,14 +17,14 @@ from decouple import config
 
 
 ADDRESS_REPORTING_SERVICE = config('ADDRESS_REPORTING_SERVICE')
+ipv4 = config('IPV4')
 
 
 # methods for person
 @convert_kwargs_to_snake_case
 def city_date_resolver(obj, info, start_date, end_date):
     try:
-        url = ADDRESS_REPORTING_SERVICE + '/search_report_fill_time_location'
-
+        url = ipv4 + ADDRESS_REPORTING_SERVICE + '/search_report_fill_time_location'
         payload = {'start_date': start_date, 'end_date': end_date}
         files = None
         headers = {}

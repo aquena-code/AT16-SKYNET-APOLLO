@@ -18,13 +18,14 @@ from decouple import config
 
 
 ADDRESS_CONVERTER_SERVICE = config('ADDRESS_CONVERTER_SERVICE')
+ipv4 = config('IPV4')
 
 
 @convert_kwargs_to_snake_case
 def ocr_converter_resolver(obj, info, file: any, language: str, format: str, converter : str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_CONVERTER_SERVICE
+    url = ipv4 + ADDRESS_CONVERTER_SERVICE
 
     payload = {'language': language,
                'format': format,

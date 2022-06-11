@@ -18,13 +18,14 @@ from decouple import config
 
 
 ADDRESS_MACHINE_SERVICE = config('ADDRESS_MACHINE_SERVICE')
+ipv4 = config('IPV4')
 
 
 @convert_kwargs_to_snake_case
 def iris_recognition_resolver(obj, info, file: any, percentage: float):
     path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_MACHINE_SERVICE + '/iris_recognition'
+    url = ipv4 + ADDRESS_MACHINE_SERVICE + '/iris_recognition'
     payload = {'percentage': percentage}
     files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}

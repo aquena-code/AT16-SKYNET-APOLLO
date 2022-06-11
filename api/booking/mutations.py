@@ -20,12 +20,13 @@ from decouple import config
 
 
 address = config('address')
+ipv4 = config('IPV4')
 
 
 @convert_kwargs_to_snake_case
 def create_post_resolver(obj, info, name, type, model, state):
     try:
-        url = address + '/resource'
+        url = ipv4 + address + '/resource'
         post = Post(
             resource_name=name,
             resource_type=type,
