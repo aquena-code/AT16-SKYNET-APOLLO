@@ -66,3 +66,7 @@ def graphql_server():
     )
     status_code = 200 if success else 400
     return jsonify(result), status_code
+
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=6012)

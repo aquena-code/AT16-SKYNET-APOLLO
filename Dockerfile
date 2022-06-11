@@ -12,24 +12,16 @@
 #
 
 # First line specifies which OS version to use
-FROM alpine:3.10
-
-# Runs required features that python needs
-RUN apk add --no-cache python3-dev \
-    && pip3 install --upgrade pip \
-
+FROM python:3.8.5-slim-buster
 # Setup working directory
 WORKDIR /app
 
 # Copy all files to app directory
 COPY . /app
-
-# Run requirements to install all packages
-RUN pip3 --no-cache-dir install -r requirements.txt
-
+# EXPOSE 5000
+RUN pip install -r requirements.txt
 # Run these commands to make graphql work with flask run
-RUN set FLASK_APP=app.py
-RUN set $env:FLASK_APP="app.py"
-
-# Expose port
-EXPOSE 5000
+RUN export FLASK_APP=app.py
+ENV FLASK_APP=app.py
+EXPOSE 6012
+CMD ["python3", "app.py"]

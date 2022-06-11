@@ -31,6 +31,8 @@ def city_date_resolver(obj, info, start_date, end_date):
 
         response = requests.request("POST", url, headers=headers, data=payload,
                                     files=files)
+        print(url)
+        print(response)
         payloads = {
             "success": True,
             "post": response.json()
@@ -43,7 +45,7 @@ def city_date_resolver(obj, info, start_date, end_date):
             "errors": [f"Incorrect date format provided. Date should be in "
                        f"the format dd-mm-yyyy"]
         }
-
+    # print(payloads)
     return payloads
 
 
