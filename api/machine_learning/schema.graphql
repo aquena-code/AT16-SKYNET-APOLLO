@@ -46,10 +46,15 @@ type ml_vggface{
     post: String!
 }
 
+type result_emotion {
+    status: Int!
+    message: String!
+}
+
 type ml_emotion{
     success: Boolean!
     errors: [String]
-    post: String!
+    post: result_emotion
 }
 
 type Mutation {
