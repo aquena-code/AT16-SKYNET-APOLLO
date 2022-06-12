@@ -54,4 +54,5 @@ query_mutation_booking = ['listPosts', 'getPost', "getPostName",
                           "listPostsPerson", "getPostPerson", "getPostNamePerson",
                           "listPostsBooking", "getPostBooking", "createPost",
                           "updatePost", "deletePost", "createBooking", "updateBooking",
+                          "createPerson", "updatePerson", "deletePerson",
                           "deleteBooking"]

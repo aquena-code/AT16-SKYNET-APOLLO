@@ -43,7 +43,7 @@ def iris_recognition_resolver(obj, info, file: any, percentage: float):
 def iris_train_resolver(obj, info, zip: any):
     path = os.path.join(r"saved_files/machine_service/uploads/", zip.filename)
     zip.save(path)
-    url = ADDRESS_MACHINE_SERVICE + '/iris_recognition_train'
+    url = ipv4 + ADDRESS_MACHINE_SERVICE + '/iris_recognition_train'
     payload = {}
     files = [('zip', (zip.filename, open(path, 'rb'), 'application/octet-stream'))]
     headers = {}
@@ -60,7 +60,7 @@ def iris_train_resolver(obj, info, zip: any):
 def object_recognizer_resolver(obj, info, file: any, name: str, model: str, percentage: float):
     path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_MACHINE_SERVICE + '/object_recognizer'
+    url = ipv4 + ADDRESS_MACHINE_SERVICE + '/object_recognizer'
 
     payload = {'name': name,
                'model': model,
@@ -85,7 +85,7 @@ def vggface_recognition_resolver(obj, info, file: any, image: any):
         file.save(path)
         path_image = os.path.join(r"saved_files/machine_service/uploads/", image.filename)
         image.save(path_image)
-        url = ADDRESS_MACHINE_SERVICE + "/vggface_search_person"
+        url = ipv4 + ADDRESS_MACHINE_SERVICE + "/vggface_search_person"
 
         payload = {}
         files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream')),
@@ -110,7 +110,7 @@ def vggface_recognition_resolver(obj, info, file: any, image: any):
 def emotion_recognition_resolver(obj, info, file: any):
     path = os.path.join(r"saved_files/machine_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_MACHINE_SERVICE + "/emotion"
+    url = ipv4 + ADDRESS_MACHINE_SERVICE + "/emotion"
 
     payload = {}
     files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]

@@ -109,10 +109,10 @@ type Query {
 
 type Mutation {
     createPost(name: String!, type: String!, model: String!, state: String!): PostResult!
-    updatePost(id_source: ID!, name: String!  ): PostResult!
+    updatePost(id_source: ID!, name: String!, type: String!, model: String!, state: String!): PostResult!
     deletePost(id_source: ID): PostResult!
     createPerson(name: String!, age: String!, city:String!, country:String!, gender:String! ): PostPerson!
-    updatePerson(id_person: ID!, city: String): PostPerson!
+    updatePerson(id_person: ID!, name: String!, age: String!, city:String!, country:String!, gender:String!): PostPerson!
     deletePerson(id_person: ID): PostPerson!
     createBooking(description: String!, subject:String!, person_id:String!, resource_id:String!, date:String!, end_time:String!, start_time:String!, state:String!, type:String!): PostBooking!
     updateBooking(id_booking: ID!, description: String, subject:String, person_id:String, resource_id:String, date:String, end_time:String, start_time:String, state:String, type:String): PostBooking!

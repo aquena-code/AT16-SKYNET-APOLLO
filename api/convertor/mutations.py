@@ -48,7 +48,7 @@ def image_converter_resolver(obj, info, file: any, color: str, rotate: str, vert
                              convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_CONVERTER_SERVICE
+    url = ipv4 + ADDRESS_CONVERTER_SERVICE
 
     payload = {'color': color,
                'rotate': rotate,
@@ -74,7 +74,7 @@ def image_converter_resolver(obj, info, file: any, color: str, rotate: str, vert
 def metadata_converter_resolver(obj, info, file: any, format: str, convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_CONVERTER_SERVICE
+    url = ipv4 + ADDRESS_CONVERTER_SERVICE
 
     payload = {'format': format,
                'convert': convert}
@@ -95,7 +95,7 @@ def translator_converter_resolver(obj, info, file: any, language_in: str, langua
                                   format: str, convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_CONVERTER_SERVICE
+    url = ipv4 + ADDRESS_CONVERTER_SERVICE
 
     payload = {'language_in': language_in,
                'language_out': language_out,
@@ -117,7 +117,7 @@ def translator_converter_resolver(obj, info, file: any, language_in: str, langua
 def waptxt_converter_resolver(obj, info, file: any, format: str, convert: str, language_in: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_CONVERTER_SERVICE
+    url = ipv4 + ADDRESS_CONVERTER_SERVICE
 
     payload = {'format': format,
                'convert': convert,
@@ -139,7 +139,7 @@ def video_converter_resolver(obj, info, file: any, frame: str, width: str, heigh
                              format: str, convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_CONVERTER_SERVICE
+    url = ipv4 + ADDRESS_CONVERTER_SERVICE
 
     payload = {'frame': frame,
                'width': width,
@@ -164,7 +164,7 @@ def audio_converter_resolver(obj, info, file: any, acodex: str, bitrate: str, sa
                              audio_channel: str, format: str, convert: str):
     path = os.path.join(r"saved_files/converter_service/uploads/", file.filename)
     file.save(path)
-    url = ADDRESS_CONVERTER_SERVICE
+    url = ipv4 + ADDRESS_CONVERTER_SERVICE
 
     payload = {'frame': acodex,
                'width': bitrate,
