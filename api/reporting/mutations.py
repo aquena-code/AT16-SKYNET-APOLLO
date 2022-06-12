@@ -52,7 +52,7 @@ def city_date_resolver(obj, info, start_date, end_date):
 @convert_kwargs_to_snake_case
 def gender_date_resolver(obj, info, open_time, close_time):
     try:
-        url = ADDRESS_REPORTING_SERVICE + '/search_report_start_finish_time_person_gender'
+        url = ipv4 + ADDRESS_REPORTING_SERVICE + '/search_report_start_finish_time_person_gender'
 
         payload = {'open_time': open_time, 'close_time': close_time}
         files = None
@@ -79,7 +79,7 @@ def gender_date_resolver(obj, info, open_time, close_time):
 @convert_kwargs_to_snake_case
 def age_gender_resolver(obj, info, person_age, person_gender):
     try:
-        url = ADDRESS_REPORTING_SERVICE + '/search_report_age_gender'
+        url = ipv4 + ADDRESS_REPORTING_SERVICE + '/search_report_age_gender'
 
         payload = {'person_age': person_age, 'person_gender': person_gender}
         files = None
@@ -105,7 +105,7 @@ def age_gender_resolver(obj, info, person_age, person_gender):
 @convert_kwargs_to_snake_case
 def country_date_resolver(obj, info, start_date, end_date):
     try:
-        url = ADDRESS_REPORTING_SERVICE + '/search_report_date_person_country'
+        url = ipv4 + ADDRESS_REPORTING_SERVICE + '/search_report_date_person_country'
 
         payload = {'start_date': start_date, 'end_date': end_date}
         files = None
@@ -132,7 +132,7 @@ def country_date_resolver(obj, info, start_date, end_date):
 @convert_kwargs_to_snake_case
 def model_type_resolver(obj, info, model: str, type: str):
     try:
-        url = ADDRESS_REPORTING_SERVICE + '/search_report_model_type'
+        url = ipv4 + ADDRESS_REPORTING_SERVICE + '/search_report_model_type'
 
         payload = {'model': model, 'type': type}
         files = None
@@ -158,7 +158,7 @@ def model_type_resolver(obj, info, model: str, type: str):
 @convert_kwargs_to_snake_case
 def state_gender_resolver(obj, info, state: str, person_gender: str):
     try:
-        url = ADDRESS_REPORTING_SERVICE + '/search_report_state_person_gender'
+        url = ipv4 + ADDRESS_REPORTING_SERVICE + '/search_report_state_person_gender'
 
         payload = {'state': state, 'person_gender': person_gender}
         files = None
