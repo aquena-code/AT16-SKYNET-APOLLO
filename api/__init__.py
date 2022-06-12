@@ -21,4 +21,3 @@ r = "postgresql://ngimluxm:zK59sGLE3DXX41RwivZ3MoceL5zGMqSu@stampy.db.elephantsq
 app.config["SQLALCHEMY_DATABASE_URI"] = r
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
-

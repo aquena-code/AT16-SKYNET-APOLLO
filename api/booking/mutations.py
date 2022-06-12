@@ -20,12 +20,13 @@ from decouple import config
 
 
 address = config('address')
+ipv4 = config('IPV4')
 
 
 @convert_kwargs_to_snake_case
 def create_post_resolver(obj, info, name, type, model, state):
     try:
-        url = address + '/resource'
+        url = ipv4 + address + '/resource'
         post = Post(
             resource_name=name,
             resource_type=type,
@@ -51,10 +52,14 @@ def create_post_resolver(obj, info, name, type, model, state):
 
 
 @convert_kwargs_to_snake_case
-def update_post_resolver(obj, info, id_source, name):
+def update_post_resolver(obj, info, id_source, name, type, model, state):
     try:
-        url = address + '/resource/' + id_source
-        dates = {'resource_name': name}
+        url = ipv4 + address + '/resource/' + id_source
+        dates = {'resource_name': name,
+                 'resource_type': type,
+                 'resource_model': model,
+                 'resource_state': state
+                }
 
         response = requests.put(url, json=dates)
         payload = {
@@ -73,7 +78,7 @@ def update_post_resolver(obj, info, id_source, name):
 @convert_kwargs_to_snake_case
 def delete_post_resolver(obj, info, id_source):
     try:
-        url = address + '/resource/' + id_source
+        url = ipv4 + address + '/resource/' + id_source
         response = requests.delete(url)
 
         payload = {"success": True,
@@ -93,7 +98,7 @@ def delete_post_resolver(obj, info, id_source):
 @convert_kwargs_to_snake_case
 def create_post_resolver_person(obj, info, name, age, city, country, gender):
     try:
-        url = address + '/person'
+        url = ipv4 + address + '/person'
 
         post = Person(
             person_age=age,
@@ -121,10 +126,15 @@ def create_post_resolver_person(obj, info, name, age, city, country, gender):
 
 
 @convert_kwargs_to_snake_case
-def update_post_resolver_person(obj, info, id_person, city):
+def update_post_resolver_person(obj, info, id_person, name, age, city, country, gender):
     try:
-        url = address + '/person/' + id_person
-        dates = {'person_city': city}
+        url = ipv4 + address + '/person/' + id_person
+        dates = {'person_city': city,
+                 'person_age': age,
+                 'person_country': country,
+                 'person_full_name': name,
+                 'person_gender': gender
+                }
         response = requests.put(url, json=dates)
         payload = {
             "success": True,
@@ -140,28 +150,9 @@ def update_post_resolver_person(obj, info, id_person, city):
 
 
 @convert_kwargs_to_snake_case
-def update_post_resolver_person(obj, info, id_person, age=None, city=None, country=None, name=None,
-                                gender=None):
-    try:
-        url = address + '/person/' + id_person
-        put = PersonPut(age, city, country, name, gender)
-        response = requests.put(url, json=put.to_dict())
-        payload = {
-            "success": True,
-            "post": response.json()
-        }
-    except AttributeError:  # todo not found
-        payload = {
-            "success": False,
-            "errors": ["item matching id {id} not found"]
-        }
-    return payload
-
-
-@convert_kwargs_to_snake_case
 def delete_post_resolver_person(obj, info, id_person):
     try:
-        url = address + '/person/' + id_person
+        url = ipv4 + address + '/person/' + id_person
         response = requests.delete(url)
 
         payload = {"success": True,
@@ -181,7 +172,7 @@ def delete_post_resolver_person(obj, info, id_person):
 def create_post_resolver_booking(obj, info, description, subject, person_id, resource_id, date,
                                  end_time, start_time, state, type):
     try:
-        url = address + '/booking'
+        url = ipv4 + address + '/booking'
         post = BookingCreate(
             description=description,
             subject=subject,
@@ -216,7 +207,7 @@ def update_post_resolver_booking(obj, info, id_booking, description=None, subjec
                                  person_id=None, resource_id=None, date=None, end_time=None,
                                  start_time=None, state=None, type=None):
     try:
-        url = address + '/booking/' + id_booking
+        url = ipv4 + address + '/booking/' + id_booking
         put = BookingPut(description, subject, person_id, resource_id, date, end_time, start_time,
                           state, type)
         response = requests.put(url, json=put.to_dict())
@@ -235,7 +226,7 @@ def update_post_resolver_booking(obj, info, id_booking, description=None, subjec
 @convert_kwargs_to_snake_case
 def delete_post_resolver_booking(obj, info, id_booking):
     try:
-        url = address + '/booking/' + id_booking
+        url = ipv4 + address + '/booking/' + id_booking
         response = requests.delete(url)
 
         payload = {"success": True,

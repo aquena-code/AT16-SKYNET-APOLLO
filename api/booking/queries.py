@@ -16,12 +16,13 @@ from decouple import config
 from ariadne import convert_kwargs_to_snake_case
 
 address = config('address')
+ipv4 = config('IPV4')
 
 
 @convert_kwargs_to_snake_case
 def listPosts_resolver(obj, info):
     try:
-        url = address + '/resource'
+        url = ipv4 + address + '/resource'
         response = requests.get(url)
         payload = {
             "success": True,
@@ -38,7 +39,7 @@ def listPosts_resolver(obj, info):
 @convert_kwargs_to_snake_case
 def getPost_resolver(obj, info, id):
     try:
-        url = address + '/resource/id/' + id
+        url = ipv4 + address + '/resource/id/' + id
         response = requests.get(url)
         payload = {
             "success": True,
@@ -57,7 +58,7 @@ def getPost_resolver(obj, info, id):
 @convert_kwargs_to_snake_case
 def getPost_resolver_name(obj, info, name):
     try:
-        url = address + '/resource/name/' + name
+        url = ipv4 + address + '/resource/name/' + name
         response = requests.get(url)
         payload = {
             "success": True,
@@ -75,7 +76,7 @@ def getPost_resolver_name(obj, info, name):
 
 def listPosts_resolver_person(obj, info):
     try:
-        url = address + '/person'
+        url = ipv4 + address + '/person'
         response = requests.get(url)
         payload = {
             "success": True,
@@ -92,7 +93,7 @@ def listPosts_resolver_person(obj, info):
 @convert_kwargs_to_snake_case
 def getPost_resolver_person(obj, info, id):
     try:
-        url = address + '/person/id/' + id
+        url = ipv4 + address + '/person/id/' + id
         response = requests.get(url)
         payload = {
             "success": True,
@@ -111,7 +112,7 @@ def getPost_resolver_person(obj, info, id):
 @convert_kwargs_to_snake_case
 def getPost_resolver_name_person(obj, info, name):
     try:
-        url = address + '/person/name/' + name
+        url = ipv4 + address + '/person/name/' + name
         response = requests.get(url)
         payload = {
             "success": True,
@@ -130,7 +131,7 @@ def getPost_resolver_name_person(obj, info, name):
 @convert_kwargs_to_snake_case
 def listPosts_resolver_booking(obj, info):
     try:
-        url = address + '/booking'
+        url = ipv4 + address + '/booking'
         response = requests.get(url)
         payload = {
             "success": True,
@@ -147,7 +148,7 @@ def listPosts_resolver_booking(obj, info):
 @convert_kwargs_to_snake_case
 def getPost_resolver_booking(obj, info, id):
     try:
-        url = address + '/booking/id/' + id
+        url = ipv4 + address + '/booking/id/' + id
         response = requests.get(url)
         payload = {
             "success": True,
