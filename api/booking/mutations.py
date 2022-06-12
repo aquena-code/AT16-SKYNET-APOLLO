@@ -150,25 +150,6 @@ def update_post_resolver_person(obj, info, id_person, name, age, city, country, 
 
 
 @convert_kwargs_to_snake_case
-def update_post_resolver_person(obj, info, id_person, age=None, city=None, country=None, name=None,
-                                gender=None):
-    try:
-        url = ipv4 + address + '/person/' + id_person
-        put = PersonPut(age, city, country, name, gender)
-        response = requests.put(url, json=put.to_dict())
-        payload = {
-            "success": True,
-            "post": response.json()
-        }
-    except AttributeError:  # todo not found
-        payload = {
-            "success": False,
-            "errors": ["item matching id {id} not found"]
-        }
-    return payload
-
-
-@convert_kwargs_to_snake_case
 def delete_post_resolver_person(obj, info, id_person):
     try:
         url = ipv4 + address + '/person/' + id_person
