@@ -166,10 +166,10 @@ def audio_converter_resolver(obj, info, file: any, acodex: str, bitrate: str, sa
     file.save(path)
     url = ipv4 + ADDRESS_CONVERTER_SERVICE
 
-    payload = {'frame': acodex,
-               'width': bitrate,
-               'height': sample_rate,
-               'color': audio_channel,
+    payload = {'acodex': acodex,
+               'bitrate': bitrate,
+               'sample_rate': sample_rate,
+               'audio_channel': audio_channel,
                'format': format,
                'convert': convert}
     files = [('file', (file.filename, open(path, 'rb'), 'application/octet-stream'))]
